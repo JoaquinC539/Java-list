@@ -18,7 +18,7 @@ public class Utils {
             return map;
         }
         ObjectMapper objectMapper=new ObjectMapper();
-        LinkedHashMap<String,Object> map=objectMapper.readValue(jsonString, LinkedHashMap.class);
+        LinkedHashMap<String,Object> map=objectMapper.readValue(jsonString, new TypeReference<LinkedHashMap<String,Object>>(){});
         return map;
     }
 
