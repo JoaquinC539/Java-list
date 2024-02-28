@@ -45,7 +45,6 @@ public class RequestParser {
         return cookiesMap;
     }
 
-    
     public static LinkedHashMap<String, Object> parseBody(HttpServletRequest request) throws IOException {
         LinkedHashMap<String, Object> bodyMap = new LinkedHashMap<>();
         String contentType = request.getContentType();
@@ -79,8 +78,7 @@ public class RequestParser {
             return map;
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(jsonBody, new TypeReference<LinkedHashMap<String, Object>>() {
-        });
+        return objectMapper.readValue(jsonBody, new TypeReference<LinkedHashMap<String, Object>>(){});
     }
 
     private static LinkedHashMap<String, Object> parseFormURLEncodedMap(String formBody) {
@@ -90,12 +88,6 @@ public class RequestParser {
             map.put("error", "Incompatible header and body request");
             return map;
         }
-        // String[] fields=formBody.split("&");
-        // for (String field : fields){
-        // String[] valkey=field.split("=");
-        // String value=valkey[1].replace("%20", " ");
-        // map.put(valkey[0], value);
-        // }
         Arrays.stream(formBody.split("&"))
                 .map(pair -> pair.split("="))
                 .filter(pair -> pair.length == 2)
@@ -106,6 +98,16 @@ public class RequestParser {
     public static LinkedHashMap<String, String> parseQueryParams(HttpServletRequest request) {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         String queryString = request.getQueryString();
+        if (queryString != null) {
+            String[] queryParamsArray = queryString.split("&");
+            for (String queryParam : queryParamsArray) {
+                String[] parts = queryParam.split("=");
+                String key = parts[0];
+                String value = parts.length > 1 ? parts[1] : "";
+                map.put(key, value);
+
+            }
+        }
         return map;
     }
 }

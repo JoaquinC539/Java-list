@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.project.utils.RequestParser;
+import com.project.utils.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -41,14 +44,8 @@ public class IndexController {
         return responseEntity;
     }
     @PostMapping(value = "/testPost")
-    public ResponseEntity<Object> postTest(HttpServletRequest request) throws IOException{
-        HashMap<String,Object> body=RequestParser.parseBody(request);
-        // System.out.println(request.getHeader("Content-Type"));
-        
-        System.out.println(body);
-
-        LinkedHashMap<String,Object> response=new LinkedHashMap<String,Object>();
-        response.put("post", "This is a post");
-        return ResponseEntity.ok().body(response);
+    public ResponseEntity<Object> postTest(HttpServletRequest request) throws JsonMappingException, JsonProcessingException {         
+        LinkedHashMap<String,Object> response=Utils.JSONParse("{\"field1\":\"value1\"}");
+        return new ResponseEntity<>(response,HttpStatusCode.valueOf(200));
     }
 }
