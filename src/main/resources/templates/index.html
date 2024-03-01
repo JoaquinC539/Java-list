@@ -1,23 +1,52 @@
-<!DOCTYPE html>
-<html
-  lang="en"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
-  <head th:replace="~{fragments/headFragment::layhead}"></head>
-  <title>Index</title>
-  <body class="bg-dark dark">
-    <div class="bg-dark dark" th:fragment="laycard">
-      <div class="container container-custom" style="max-width: 1500px">
-        <h1><a href="/" class="home">Home</a></h1>
-        <div class="card">
-          <!-- <span>CONTENT HERE</span> -->
-        </div>
+<html  th:replace="~{fragments/layout::layout}" >  
+  <title th:fragment="title">Index</title>
+  <div th:fragment="content">     
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">
+          <h1>Java/Spring Project</h1>
       </div>
+      <div class="card-body mb-2 text-body-secondary text-center">
+        <p>Este es un proyecto enfocado en el uso de Java Spring, donde:</p>
+        <p>Spring es un framework de aplicación web con una sintaxis expresiva y elegante para crear aplicaciones full-stack.
+        Spring promueve las siguientes características:</p>
+        <ul>
+            <li class="list-group-item">Motor de enrutamiento simple y rápido.</li>
+            <li class="list-group-item">Contenedor de inyección de dependencias potente.</li>
+            <li class="list-group-item">Múltiples almacenes para sesiones y caché.</li>
+            <li class="list-group-item">ORM de base de datos expresivo e intuitivo.</li>
+            <li class="list-group-item">Migraciones de esquema independientes de la base de datos.</li>
+        </ul>
+          <h2>Routes to the other dummy models: </h2>
+          </p>
+          <nav class="navbar bg-body-tertiary">
+              <div class="container-fluid">
+                  <a class="navbar-brand navbar-link" href="/vendedor">Vendedores</a>
+                  <!-- <a class="navbar-brand navbar-link" href="{{ route('proveedor.index') }}">Proveedores</a> -->
+                  <!-- <a class="navbar-brand navbar-link" href="{{ route('producto.index') }}">Productos</a> -->
+                  <!-- <a class="navbar-brand navbar-link" href="{{ route('register') }}">Register</a> -->
+              </div>
+          </nav>
+          <!-- <nav class="navbar bg-body-tertiary">
+              <div class="container-fluid">
+                  <a class="navbar-brand navbar-link" href="{{ route('login') }}">Login</a>
+              </div>
+          </nav> -->
+      </div>
+      <br>      
+      <div th:if="${not #strings.isEmpty(successMessage)}" class="row message-container">
+        <div class="col-12 bg-success message">
+            <p class="text-center alert-custom" th:text="${successMessage}"></p>
+        </div>
+    </div>
+    
+    
+    <div th:if="${not #strings.isEmpty(errorMessage)}" class="row message-container">
+        <div class="col-12 bg-danger message">
+            <p class="text-center alert-custom" th:text="${errorMessage}"></p>
+        </div>
     </div>
 
-    <span>
-      <span th:insert="~{fragments/scriptsFragment::layscripts}"></span>
-    </span>
-  </body>
+  </div>
+  </div>
 </html>
+
