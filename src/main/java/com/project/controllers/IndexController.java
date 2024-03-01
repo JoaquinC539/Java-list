@@ -12,7 +12,7 @@ public class IndexController {
     
     @RequestMapping("/")
     public String index(Model model){
-        model.addAttribute("successMessage", "!Operacion exitosa");
+        // model.addAttribute("successMessage", "!Operacion exitosa");
         
         return "index";
         
