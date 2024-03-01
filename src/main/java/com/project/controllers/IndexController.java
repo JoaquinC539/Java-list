@@ -29,6 +29,7 @@ public class IndexController {
     @RequestMapping("/")
     public String index(){
         return "index";
+        // return "fragment/layout_main";
     }
     
     @RequestMapping(value = "/test",method = RequestMethod.GET)    
