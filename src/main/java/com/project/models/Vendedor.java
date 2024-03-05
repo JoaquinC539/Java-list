@@ -31,8 +31,8 @@ public class Vendedor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Integer id;
+    @Column(name="_id")
+    private Integer _id;
 
     @Column(name = "nombre",nullable = false, length = 50)
     private String nombre;

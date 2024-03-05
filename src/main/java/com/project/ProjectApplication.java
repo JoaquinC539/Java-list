@@ -30,6 +30,7 @@ public class ProjectApplication {
 		environmentstd.getPropertySources().addFirst(new MapPropertySource("dotenv", map));
 		app.setEnvironment(environmentstd);
 		app.run(args);
+		
 		return;
 	}
 	

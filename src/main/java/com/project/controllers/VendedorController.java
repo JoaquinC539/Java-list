@@ -23,7 +23,7 @@ public class VendedorController {
     @Autowired
     private VendedorService vendedorService;
 
-    @GetMapping
+    @GetMapping(value = "")
     public Object index(HttpServletRequest request){
         List<Vendedor> vendedores = vendedorService.index();
         String contentHeader=request.getHeader("content-type");
@@ -35,12 +35,15 @@ public class VendedorController {
         }else{
             HttpHeaders headers=new HttpHeaders();
             headers.add("Content-Type", "application/json");
-            ResponseEntity<List<Vendedor>> response=new ResponseEntity<List<Vendedor>>(vendedores, headers,HttpStatusCode.valueOf(200));
-            
+            ResponseEntity<List<Vendedor>> response=new ResponseEntity<List<Vendedor>>(vendedores, headers,HttpStatusCode.valueOf(200));            
             return response;
-        }
-    
+        }        
+    }
+    @GetMapping(value = "/index2")
+    public Object index2(HttpServletRequest request){
+        Object vendedores=vendedorService.index2();
+        ResponseEntity<Object> response=new ResponseEntity<Object>(vendedores, HttpStatusCode.valueOf(200));
+        return response;
 
-        
     }
 }

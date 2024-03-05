@@ -1,0 +1,33 @@
+<html  th:replace="~{fragments/layout::layout}" >  
+  <title th:fragment="title">Index</title>
+  <div th:fragment="content">     
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">
+          <h1>404 Not Found</h1>
+      </div>
+      <div class="card-body mb-2 text-body-secondary text-center">
+        <p>Sorry the page you were looking for was not found</p>
+        
+      </div>
+      <br>      
+      <div th:if="${not #strings.isEmpty(successMessage)}" class="row message-container">
+        <div class="col-12 bg-success message">
+            <p class="text-center alert-custom" th:text="${successMessage}"></p>
+        </div>
+    </div>
+    
+    
+    <div th:if="${not #strings.isEmpty(errorMessage)}" class="row message-container">
+        <div class="col-12 bg-danger message">
+            <p class="text-center alert-custom" th:text="${errorMessage}"></p>
+        </div>
+    </div>
+
+    </div>
+  </div>
+  <div th:fragment="viewscript">
+    >
+    
+  </div>
+</html>
+
