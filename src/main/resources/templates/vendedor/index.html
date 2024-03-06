@@ -65,21 +65,22 @@
             <th class="text-center">Activo</th>
           </thead>
           <tbody>
-            <tr th:each=" vendedor: ${vendedores}">
+            <tr th:each=" vendedor: ${vendedores.data}">
               <td class="text-truncate text-center">
                 <a th:href="@{'/vendedor/'+${vendedor._id}}"><i class="fa fa-pencil"></i></a>
               </td>
+              
               <td class="text-truncate text-center" th:text="${vendedor._id}" ></td>
               <td class="text-truncate text-center" th:text="${vendedor.nombre}" ></td>
               <td class="text-truncate text-center" th:text="${vendedor.apellido}" ></td>
               <td class="text-truncate text-center" th:text="${vendedor.edad}" ></td>
-              <td class="text-truncate text-center" th:text="${vendedor.correoElectronico}" ></td>
+              <td class="text-truncate text-center" th:text="${vendedor.correo_electronico}" ></td>
               <td class="text-truncate text-center" th:text="${vendedor.activo ? 'Activo':'Inactivo'}"></td>
               
             </tr>
           </tbody>
         </table>
-        <div class="paginator">
+        <div class="paginator" id="paginator">
           
         </div>
       </div>
@@ -88,11 +89,14 @@
     
    
   </div>  
-  <div th:fragment="viewscript">
-    <script th:inline="javascript">
-      let vendedores=JSON.parse('[[${vendedores}]]')
-      console.log(vendedores)
-      console.log()
+  <div th:fragment="viewscript"> 
+    <script src="/js/utils/utils.js"></script>
+    <script th:inline="javascript" type="module">
+      utils.setPaginator('[[${vendedores.count}]]')
+      
+      
+      // index.myFunc(vendedores)
+     
     </script>
     
   </div>

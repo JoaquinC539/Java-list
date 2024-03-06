@@ -1,18 +1,14 @@
 package com.project.utils;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
-
-
-
-
 public class Querier {
-    public static Object query(String sql,LinkedList<Object> values){
+    public static LinkedList<HashMap<String,Object>> query(String sql,LinkedList<Object> values){
         try (Connection conn=com.project.config.Conecction.connection()){
             PreparedStatement ps=conn.prepareStatement(sql);
             for(int i=0;i<values.size();i++){
@@ -20,7 +16,7 @@ public class Querier {
             }
             
             ResultSet rs=ps.executeQuery();
-            LinkedList<Object> results=new LinkedList<>();        
+            LinkedList<HashMap<String,Object>> results=new LinkedList<>();        
             
             while (rs.next()) {
                 HashMap<String,Object> row=new HashMap<>();            
@@ -38,4 +34,34 @@ public class Querier {
             return null;
         } 
     }
+    public static <T> LinkedList<T> queryModel(String sql,LinkedList<Object> values,Class<T> class1){
+        try (Connection conn=com.project.config.Conecction.connection()){
+            PreparedStatement ps=conn.prepareStatement(sql);
+            for(int i=0;i<values.size();i++){
+                ps.setObject(i+1, values.get(i));
+            }            
+            ResultSet rs=ps.executeQuery();
+            LinkedList<T> results=new LinkedList<>(); 
+            while(rs.next()){
+                T obj = class1.getDeclaredConstructor().newInstance();
+                Field[] fields=class1.getDeclaredFields();
+                for (Field field:fields){
+                    String fieldName=field.getName();
+                    Object fieldValue=rs.getObject(fieldName);
+                    field.setAccessible(true);
+                    field.set(obj, fieldValue);
+                }
+                results.add(obj);
+            }
+            ps.close();
+            conn.close();
+            rs.close();
+            return results;            
+        } catch (Exception e) {
+            System.err.println("Error at querying: "+e);
+            return null;
+        } 
+    }
+    
+
 }

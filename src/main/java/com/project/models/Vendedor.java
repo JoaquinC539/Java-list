@@ -14,19 +14,19 @@ import lombok.Data;
 public class Vendedor {
     public Vendedor(){}
     public Vendedor(Date updatedAt){
-        this.setUpdatedAt(updatedAt);
+        this.setUpdated_at(updatedAt);
     }
     public Vendedor(Date updatedAt,Date createdAt){
-        this.setUpdatedAt(updatedAt);
-        this.setCreatedAt(createdAt);
+        this.setUpdated_at(updatedAt);
+        this.setCreated_at(createdAt);
     }
 
     public void update(){
-        this.setUpdatedAt(new Date());
+        this.setUpdated_at(new Date());
     }
     public void create(){
-        this.setUpdatedAt(new Date());
-        this.setCreatedAt(new Date());
+        this.setUpdated_at(new Date());
+        this.setCreated_at(new Date());
     }
 
     @Id
@@ -44,13 +44,13 @@ public class Vendedor {
     private Integer edad;
 
     @Column(name = "correo_electronico", nullable = false, length = 50)
-    private String correoElectronico;
+    private String correo_electronico;
 
     @Column(name = "activo", nullable = false)
     private Boolean activo;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private Date created_at;
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private Date updated_at;
 }

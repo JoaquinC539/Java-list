@@ -84,3 +84,7 @@ tr,td{
     color: aliceblue;
     font-size: 1.3em;
 }
+.active-page{
+    color: #000;
+    text-decoration: none;
+}

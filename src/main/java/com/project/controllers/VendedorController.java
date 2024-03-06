@@ -1,7 +1,7 @@
 package com.project.controllers;
 
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.models.Vendedor;
 import com.project.services.VendedorService;
-
+import com.project.utils.PaginatedData;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -25,25 +25,19 @@ public class VendedorController {
 
     @GetMapping(value = "")
     public Object index(HttpServletRequest request){
-        List<Vendedor> vendedores = vendedorService.index();
+        PaginatedData<Vendedor> vendedores = vendedorService.index(request);
         String contentHeader=request.getHeader("content-type");
-        if(contentHeader==null){
+        if(contentHeader==null){  
             ModelAndView model=new ModelAndView();
-            model.setViewName("vendedor/index");
-            model.addObject("vendedores", vendedores);
+            model.setViewName("vendedor/index");            
+            model.addObject("vendedores", vendedores);      
             return model;
         }else{
-            HttpHeaders headers=new HttpHeaders();
+            HttpHeaders headers=new HttpHeaders();            
             headers.add("Content-Type", "application/json");
-            ResponseEntity<List<Vendedor>> response=new ResponseEntity<List<Vendedor>>(vendedores, headers,HttpStatusCode.valueOf(200));            
+            ResponseEntity response=new ResponseEntity<>(vendedores,headers,HttpStatusCode.valueOf(200));         
             return response;
         }        
     }
-    @GetMapping(value = "/index2")
-    public Object index2(HttpServletRequest request){
-        Object vendedores=vendedorService.index2();
-        ResponseEntity<Object> response=new ResponseEntity<Object>(vendedores, HttpStatusCode.valueOf(200));
-        return response;
-
-    }
+    
 }
