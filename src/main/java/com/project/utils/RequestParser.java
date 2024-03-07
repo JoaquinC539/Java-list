@@ -103,8 +103,12 @@ public class RequestParser {
             for (String queryParam : queryParamsArray) {
                 String[] parts = queryParam.split("=");
                 String key = parts[0];
-                String value = parts.length > 1 ? parts[1] : "";
-                map.put(key, value);
+                if(parts.length > 1){
+                    String value=parts[1];
+                    map.put(key, value);
+                }
+                
+                
 
             }
         }

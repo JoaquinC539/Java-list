@@ -1,7 +1,7 @@
 <html th:replace="~{fragments/layout::layout}">
   <title th:fragment="title">Index</title>
-  <div th:fragment="content"> 
-       <!-------------CONTENT  ------>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
     <div class="card w-100">
       <div class="card-title text-center mb-2">Vendedor</div>
       <div class="card-subtitle mb-2 text-body-secondary text-center">
@@ -37,12 +37,81 @@
 
       <br />
       <div class="card-body">
-        <form
-          class="form"
-          id="vendedores_filter"
-          method="GET"
-          action="#"
-        >          
+        <form class="form" id="vendedores_filter" method="GET" action="#">
+          <div class="row">
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="ID"
+                name="_id"
+                aria-label="nombre"
+                spellcheck="false"
+                th:value="${param._id?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Nombre"
+                name="nombre"
+                aria-label="nombre"
+                spellcheck="false"
+                th:value="${param.nombre?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Apellido"
+                name="apellido"
+                aria-label="apelldo"
+                spellcheck="false"
+                th:value="${param.apellido?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="Edad"
+                name="edad"
+                aria-label="edad"
+                spellcheck="false"
+                th:value="${param.edad?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Correro Electronico"
+                name="correo_electronico"
+                aria-label="correo_electronico"
+                spellcheck="false"
+                th:value="${param.correo_electronico?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <select name="activo" id="activo">
+                <option value="">Selecciona una opcion</option>
+                <option
+                  value="true"
+                  th:selected="${#strings.equals('true', param.activo)}"
+                >
+                  Activo
+                </option>
+                <option
+                  value="false"
+                  th:selected="${#strings.equals('false', param.activo)}"
+                >
+                  Inactivo
+                </option>
+              </select>
+            </div>
+          </div>
 
           <br />
           <input
@@ -50,6 +119,9 @@
             type="submit"
             value="Filtrar"
           />
+          <a class="btn btn-outline-danger my-2 my-sm-0" href="/vendedor"
+            >Remover filtros</a
+          >
         </form>
       </div>
 
@@ -67,37 +139,49 @@
           <tbody>
             <tr th:each=" vendedor: ${vendedores.data}">
               <td class="text-truncate text-center">
-                <a th:href="@{'/vendedor/'+${vendedor._id}}"><i class="fa fa-pencil"></i></a>
+                <a th:href="@{'/vendedor/'+${vendedor._id}}"
+                  ><i class="fa fa-pencil"></i
+                ></a>
               </td>
-              
-              <td class="text-truncate text-center" th:text="${vendedor._id}" ></td>
-              <td class="text-truncate text-center" th:text="${vendedor.nombre}" ></td>
-              <td class="text-truncate text-center" th:text="${vendedor.apellido}" ></td>
-              <td class="text-truncate text-center" th:text="${vendedor.edad}" ></td>
-              <td class="text-truncate text-center" th:text="${vendedor.correo_electronico}" ></td>
-              <td class="text-truncate text-center" th:text="${vendedor.activo ? 'Activo':'Inactivo'}"></td>
-              
+
+              <td
+                class="text-truncate text-center"
+                th:text="${vendedor._id}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${vendedor.nombre}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${vendedor.apellido}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${vendedor.edad}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${vendedor.correo_electronico}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${vendedor.activo ? 'Activo':'Inactivo'}"
+              ></td>
             </tr>
           </tbody>
         </table>
-        <div class="paginator" id="paginator">
-          
-        </div>
+        <div class="paginator" id="paginator"></div>
       </div>
     </div>
     <!----------- END CONTENT------------ -->
-    
-   
-  </div>  
-  <div th:fragment="viewscript"> 
+  </div>
+  <div th:fragment="viewscript">
     <script src="/js/utils/utils.js"></script>
     <script th:inline="javascript" type="module">
-      utils.setPaginator('[[${vendedores.count}]]')
-      
-      
+      utils.setPaginator("[[${vendedores.count}]]");
+
       // index.myFunc(vendedores)
-     
     </script>
-    
   </div>
 </html>

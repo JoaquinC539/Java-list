@@ -35,7 +35,7 @@ public class PagingHelper {
         paginatedValues.add(offset);
         LinkedList<T> data=Querier.queryModel(paginatedSql, paginatedValues, class1);
         LinkedList<HashMap<String,Object>> count=Querier.query("SELECT COUNT(*) FROM (" + baseSql + ")", values);
-        Long countInt=(Long) count.getFirst().get("count");
+        Long countInt=count.get(0).size()>0? (Long) count.get(0).get("count"): Long.valueOf(0);
         PaginatedData<T> result=new PaginatedData<>(data, countInt);
 
 
