@@ -40,13 +40,13 @@ public class Vendedor {
     @Column(name = "apellido", nullable = false, length = 50)
     private String apellido;
 
-    @Column(name = "edad")
+    @Column(name = "edad",nullable = false)
     private Integer edad;
 
     @Column(name = "correo_electronico", nullable = false, length = 50)
     private String correo_electronico;
 
-    @Column(name = "activo", nullable = false)
+    @Column(name = "activo", nullable = true)
     private Boolean activo;
 
     @Column(name = "created_at")

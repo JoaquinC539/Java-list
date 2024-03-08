@@ -2,6 +2,7 @@ package com.project.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 
 import java.util.LinkedHashMap;
@@ -12,8 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.Arrays;
 
 public class RequestParser {
 
@@ -45,7 +44,7 @@ public class RequestParser {
         return cookiesMap;
     }
 
-    public static LinkedHashMap<String, Object> parseBody(HttpServletRequest request) throws IOException {
+    public static LinkedHashMap<String, Object> parseBody(HttpServletRequest request) throws Exception {
         LinkedHashMap<String, Object> bodyMap = new LinkedHashMap<>();
         String contentType = request.getContentType();
         if (contentType != null && contentType.contains("application/json")) {
@@ -78,20 +77,31 @@ public class RequestParser {
             return map;
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(jsonBody, new TypeReference<LinkedHashMap<String, Object>>(){});
+        return objectMapper.readValue(jsonBody, new TypeReference<LinkedHashMap<String, Object>>() {
+        });
     }
 
-    private static LinkedHashMap<String, Object> parseFormURLEncodedMap(String formBody) {
+    private static LinkedHashMap<String, Object> parseFormURLEncodedMap(String formBody) throws Exception {
         LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 
         if (formBody.toCharArray()[0] == '{') {
             map.put("error", "Incompatible header and body request");
             return map;
         }
-        Arrays.stream(formBody.split("&"))
-                .map(pair -> pair.split("="))
-                .filter(pair -> pair.length == 2)
-                .forEach(pair -> map.put(pair[0], pair[1].replace("%20", " ")));
+
+        formBody = URLDecoder.decode(formBody, "UTF-8");
+
+        String[] pairs = formBody.split("&");
+        for (String pair : pairs) {
+            String[] keyValue = pair.split("=");
+            if (keyValue.length == 2) {
+                String key = keyValue[0];
+                String value = keyValue[1];
+                map.put(key, value);
+
+            }
+        }
+        
         return map;
     }
 
@@ -103,13 +113,10 @@ public class RequestParser {
             for (String queryParam : queryParamsArray) {
                 String[] parts = queryParam.split("=");
                 String key = parts[0];
-                if(parts.length > 1){
-                    String value=parts[1];
+                if (parts.length > 1) {
+                    String value = parts[1];
                     map.put(key, value);
                 }
-                
-                
-
             }
         }
         return map;

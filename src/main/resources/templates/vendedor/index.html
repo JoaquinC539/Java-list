@@ -9,35 +9,37 @@
       </div>
       <div class="card-subtitle">
         <div class="d-flex justify-content-center">
-          <a href="/vendedor" class="btn btn-primary" type="button"
+          <a href="/vendedor/create" class="btn btn-primary" type="button"
             >Nuevo Vendedor</a
           >
         </div>
       </div>
       <br />
-
+      <p th:if="${sessions.success}"></p>
       <div
-        th:if="${not #strings.isEmpty(successMessage)}"
+        th:if="${sessions.success}"
         class="row message-container"
       >
         <div class="col-12 bg-success message">
-          <p class="text-center alert-custom" th:text="${successMessage}"></p>
+          <p class="text-center alert-custom" th:text="${sessions.successMessage}"></p>
+          <span th:text="${sessions.hide()}" hidden></span>
         </div>
       </div>
 
       <div
-        th:if="${not #strings.isEmpty(errorMessage)}"
+        th:if="${sessions.error}"
         class="row message-container"
       >
         <div class="col-12 bg-danger message">
-          <p class="text-center alert-custom" th:text="${errorMessage}"></p>
+          <p class="text-center alert-custom" th:text="${sessions.errorMessage}"></p>
+          <span th:text="${sessions.hide()}" hidden></span>
         </div>
       </div>
       <br />
 
       <br />
       <div class="card-body">
-        <form class="form" id="vendedores_filter" method="GET" action="#">
+        <form class="form" id="vendedores_filter" method="GET" action="/vendedor">
           <div class="row">
             <div class="col-12 col-md-4 form-box">
               <input

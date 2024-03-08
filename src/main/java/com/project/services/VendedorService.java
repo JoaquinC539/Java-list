@@ -8,11 +8,15 @@ import com.project.repository.vendedor.VendedorRepository;
 import com.project.utils.PaginatedData;
 import com.project.utils.PagingHelper;
 import com.project.utils.RequestParser;
+import com.project.utils.TypeConverter;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class VendedorService {
@@ -45,8 +49,8 @@ public class VendedorService {
             baseSql += " AND correo_electronico ILIKE ?";
             values.add(params.get("correo_electronico") + "%");
         }
-        if(params.containsKey("activo")){
-            baseSql +=" AND activo=?";
+        if (params.containsKey("activo")) {
+            baseSql += " AND activo=?";
             values.add(Boolean.parseBoolean(params.get("activo")));
         }
 
@@ -57,5 +61,32 @@ public class VendedorService {
         return response;
     }
 
-    
+    public Object index2(HttpServletRequest request){
+        HashMap<String, String> params = RequestParser.parseQueryParams(request);
+        // List<Vendedor> vendedores=vendedorRepository.findByName("H"+"%");
+        List<Vendedor> vendedores=vendedorRepository.findIndex(
+            TypeConverter.convertToLong(params.get("_id")),
+            TypeConverter.convertToString(params.get("nombre"))!=null ? TypeConverter.convertToString(params.get("nombre"))+"%":null
+           
+        );
+        
+        return vendedores;
+    }
+
+    public Vendedor save(LinkedHashMap<String, Object> body) {
+        try {
+            Vendedor vendedor = new Vendedor(new Date(), new Date());
+            vendedor.setNombre(TypeConverter.convertToString(body.get("nombre")));
+            vendedor.setApellido(TypeConverter.convertToString(body.get("apellido")));
+            vendedor.setEdad(TypeConverter.convertToInteger(body.get("edad")));
+            vendedor.setCorreo_electronico(TypeConverter.convertToString(body.get("correo_electronico")));
+            vendedor.setActivo(TypeConverter.convertToBoolean(body.get("activo")));
+            return vendedor;
+            // return vendedorRepository.save(vendedor);
+        } catch (Exception e) {
+            System.out.println("Vendedor was not created: " + e);
+            // Vendedor vendedor = new Vendedor();
+            return null;
+        }
+    }
 }

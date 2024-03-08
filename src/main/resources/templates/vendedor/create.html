@@ -1,0 +1,121 @@
+<html th:replace="~{fragments/layout::layout}">
+  <title th:fragment="title">Index</title>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">Vendedor</div>
+      <div class="card-subtitle mb-2 text-body-secondary text-center">
+        Index
+      </div>
+      <div class="card-subtitle">
+        <div class="d-flex justify-content-center">
+          <a href="/vendedor" class="btn btn-primary" type="button"
+            >Vendedores</a
+          >
+        </div>
+      </div>
+      <br />
+
+      <div
+        th:if="${not #strings.isEmpty(successMessage)}"
+        class="row message-container"
+      >
+        <div class="col-12 bg-success message">
+          <p class="text-center alert-custom" th:text="${successMessage}"></p>
+        </div>
+      </div>
+
+      <div
+        th:if="${not #strings.isEmpty(errorMessage)}"
+        class="row message-container"
+      >
+        <div class="col-12 bg-danger message">
+          <p class="text-center alert-custom" th:text="${errorMessage}"></p>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="card-body">
+        <form class="form" id="vendedores_filter" method="POST" action="/vendedor">
+          <div class="row">
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Nombre"
+                name="nombre"
+                aria-label="nombre"
+                spellcheck="false"
+                th:value="${param.nombre?:''}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Apellido"
+                name="apellido"
+                aria-label="apelldo"
+                spellcheck="false"
+                th:value="${param.apellido?:''}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="Edad"
+                name="edad"
+                aria-label="edad"
+                spellcheck="false"
+                th:value="${param.edad?:''}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Correro Electronico"
+                name="correo_electronico"
+                aria-label="correo_electronico"
+                spellcheck="false"
+                th:value="${param.correo_electronico?:''}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <select name="activo" id="activo" required>
+                <option value="" disabled>Selecciona estatus</option>
+                <option value="true">Activo</option>
+                <option
+                  value="false"                  
+                >
+                  Inactivo
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <br />
+          <input
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+            value="Filtrar"
+          />
+          <a class="btn btn-outline-danger my-2 my-sm-0" href="/vendedor"
+            >Cancelar</a
+          >
+        </form>
+      </div>
+    </div>
+    <!----------- END CONTENT------------ -->
+  </div>
+  <div th:fragment="viewscript">
+    <script src="/js/utils/utils.js"></script>
+    <script th:inline="javascript" type="module"></script>
+  </div>
+</html>
