@@ -1,0 +1,67 @@
+<html th:replace="~{fragments/layout::layout}">
+  <title th:fragment="title">Registro</title>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">        
+        <b class="sub-title">Registro</b>        
+      </div>
+      <br>
+      <br>
+      <div class="card-subtitle">
+        <form th:action="@{/register}" id="login" class="form" method="post">
+        <!-- <form action="/register" id="login" method="post"> -->
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="col-12 col-md-4 form-box">
+                  <input class="form-control " type="text" placeholder="Usuario" name="username" aria-label="username" required="">
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <div class="col-12 col-md-4 form-box">
+                  <input class="form-control " type="password" placeholder="Contraseña" name="password" aria-label="password" required="">
+              </div>
+            </div>
+
+          </div>
+          <br>
+          <div class="d-flex justify-content-center">
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Registarse" style="width: 6em;" >
+          </div>
+
+        </form>
+      </div>
+      <br />
+
+      <div th:if="${sessions?.success}" class="row message-container">
+        <div class="col-12 bg-success message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.successMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <div th:if="${sessions?.error}" class="row message-container">
+        <div class="col-12 bg-danger message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.errorMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="card-body">
+        
+      </div>
+    </div>
+    <!----------- END CONTENT------------ -->
+  </div>
+  <div th:fragment="viewscript">    
+    <script th:inline="javascript" type="module"></script>
+  </div>
+</html>

@@ -23,14 +23,14 @@
                   <a class="navbar-brand navbar-link" href="/vendedor">Vendedores</a>
                   <!-- <a class="navbar-brand navbar-link" href="{{ route('proveedor.index') }}">Proveedores</a> -->
                   <!-- <a class="navbar-brand navbar-link" href="{{ route('producto.index') }}">Productos</a> -->
-                  <!-- <a class="navbar-brand navbar-link" href="{{ route('register') }}">Register</a> -->
+                  <a class="navbar-brand navbar-link" href="/register">Registro</a>
               </div>
           </nav>
-          <!-- <nav class="navbar bg-body-tertiary">
+          <nav class="navbar bg-body-tertiary">
               <div class="container-fluid">
-                  <a class="navbar-brand navbar-link" href="{{ route('login') }}">Login</a>
+                  <a class="navbar-brand navbar-link" href="/login">Login</a>
               </div>
-          </nav> -->
+          </nav>
       </div>
       <br>      
       <div th:if="${not #strings.isEmpty(successMessage)}" class="row message-container">

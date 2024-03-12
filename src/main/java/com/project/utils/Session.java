@@ -14,7 +14,7 @@ public class Session {
         this.successMessage=message;
     }
     public void setError(String message){
-        this.error=false;
+        this.error=true;
         this.errorMessage=message;
     }
     public String getSuccessMessage(){

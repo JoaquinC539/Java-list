@@ -54,9 +54,7 @@ public class RequestParser {
             String formBody = extractRequestBody(request);
             bodyMap = parseFormURLEncodedMap(formBody);
         }
-
         return bodyMap;
-
     }
 
     private static String extractRequestBody(HttpServletRequest request) throws IOException {

@@ -14,25 +14,23 @@
           >
         </div>
       </div>
-      <br />
-      <p th:if="${sessions.success}"></p>
+      <br />      
       <div
-        th:if="${sessions.success}"
+        th:if="${sessions?.success}"
         class="row message-container"
       >
         <div class="col-12 bg-success message">
-          <p class="text-center alert-custom" th:text="${sessions.successMessage}"></p>
-          <span th:text="${sessions.hide()}" hidden></span>
+          <p class="text-center alert-custom" th:text="${sessions?.successMessage}"></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
         </div>
       </div>
-
       <div
-        th:if="${sessions.error}"
+        th:if="${sessions?.error}"
         class="row message-container"
       >
         <div class="col-12 bg-danger message">
-          <p class="text-center alert-custom" th:text="${sessions.errorMessage}"></p>
-          <span th:text="${sessions.hide()}" hidden></span>
+          <p class="text-center alert-custom" th:text="${sessions?.errorMessage}"></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
         </div>
       </div>
       <br />
@@ -141,7 +139,7 @@
           <tbody>
             <tr th:each=" vendedor: ${vendedores.data}">
               <td class="text-truncate text-center">
-                <a th:href="@{'/vendedor/'+${vendedor._id}}"
+                <a th:href="@{'/vendedor/edit/'+${vendedor._id}}"
                   ><i class="fa fa-pencil"></i
                 ></a>
               </td>

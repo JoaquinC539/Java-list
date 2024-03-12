@@ -32,7 +32,7 @@ public class TypeConverter {
         if (value instanceof Boolean) {
             return (Boolean) value;
         } else if (value instanceof String) {
-            String strValue = ((String) value).toLowerCase();
+            String strValue = ((String) value).toLowerCase().trim();
             if (strValue.equals("true")) {
                 return true;
             } else if (strValue.equals("false")) {

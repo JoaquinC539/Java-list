@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VendedorService {
@@ -24,7 +25,7 @@ public class VendedorService {
     @Autowired
     private VendedorRepository vendedorRepository;
 
-    public PaginatedData<Vendedor> index(HttpServletRequest request) {
+    public PaginatedData<Vendedor> index(HttpServletRequest request) {        
         String baseSql = "SELECT * FROM vendedores WHERE 1=1 ";
         LinkedList<Object> values = new LinkedList<Object>();
         HashMap<String, String> params = RequestParser.parseQueryParams(request);
@@ -81,11 +82,40 @@ public class VendedorService {
             vendedor.setEdad(TypeConverter.convertToInteger(body.get("edad")));
             vendedor.setCorreo_electronico(TypeConverter.convertToString(body.get("correo_electronico")));
             vendedor.setActivo(TypeConverter.convertToBoolean(body.get("activo")));
-            return vendedor;
-            // return vendedorRepository.save(vendedor);
+            // return vendedor;
+            return vendedorRepository.save(vendedor);
         } catch (Exception e) {
             System.out.println("Vendedor was not created: " + e);
             // Vendedor vendedor = new Vendedor();
+            return null;
+        }
+    }
+    public Optional<Vendedor> get(int id){
+        try {
+            Optional<Vendedor> vendedor= vendedorRepository.findById(id);
+            return vendedor;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public Vendedor update (int id,LinkedHashMap<String,Object> body){
+        try {
+            Optional<Vendedor> vendedorOptional= vendedorRepository.findById(id);
+            if(!vendedorOptional.isPresent()){
+                return null;
+            }else{
+                Vendedor vendedor=vendedorOptional.get();
+                vendedor.setNombre(TypeConverter.convertToString(body.get("nombre")));
+                vendedor.setApellido(TypeConverter.convertToString(body.get("apellido")));
+                vendedor.setEdad(TypeConverter.convertToInteger(body.get("edad")));
+                vendedor.setCorreo_electronico(TypeConverter.convertToString(body.get("correo_electronico")));
+                vendedor.setActivo(TypeConverter.convertToBoolean(body.get("activo")));
+                vendedor.setUpdated_at(new Date());
+                Vendedor vendedorUpdate=vendedorRepository.save(vendedor);
+                return vendedorUpdate;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }

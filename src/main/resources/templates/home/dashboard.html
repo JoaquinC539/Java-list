@@ -1,0 +1,48 @@
+<html th:replace="~{fragments/layout::layout}">
+  <title th:fragment="title">Dashboard</title>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">        
+        <b class="sub-title">Dashboard</b>        
+      </div>
+      <br>
+      <br>
+      <div class="card-subtitle">
+        
+      </div>
+      <br />
+
+      <div th:if="${sessions?.success}" class="row message-container">
+        <div class="col-12 bg-success message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.successMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <div th:if="${sessions?.error}" class="row message-container">
+        <div class="col-12 bg-danger message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.errorMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="card-body">
+        <form th:action="@{/logout}" method="post">
+          <input type="submit" value="Sign Out"/>
+      </form>
+      </div>
+    </div>
+    <!----------- END CONTENT------------ -->
+  </div>
+  <div th:fragment="viewscript">    
+    <script th:inline="javascript" type="module"></script>
+  </div>
+</html>
