@@ -19,7 +19,6 @@ public class DashboardController {
     public String index(HttpServletRequest request,Model model){
         Usersj user=(Usersj) request.getAttribute("user");
         model.addAttribute("user", user);
-        System.out.println(user);
         model.addAttribute("sessions", session);
         return "home/dashboard";
     }
