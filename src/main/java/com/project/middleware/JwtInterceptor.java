@@ -21,7 +21,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         if(authSetter==null){
             return false;
         }
-        if(!authSetter){
+        if(!authSetter && !request.getRequestURI().equals("/login")){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.sendRedirect("/login");
             return false;

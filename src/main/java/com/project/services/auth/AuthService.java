@@ -71,6 +71,7 @@ public class AuthService {
                authCookie.setMaxAge(authDuration);
                authCookie.setAttribute("SameSite", "Strict");
                response.addCookie(authCookie);
+               response.addCookie(refreshCookie);
                request.setAttribute("user", user.get());
                return true;
 
