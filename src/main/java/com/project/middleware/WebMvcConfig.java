@@ -13,12 +13,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private JwtInterceptor jwtInterceptor;
     private List<String> routeExceptions=new ArrayList<String>();
+    private List<String> protectedRoutes=new ArrayList<String>();
+    
     @SuppressWarnings("null")
     @Override
     public void addInterceptors(InterceptorRegistry registry){
+        routeExceptions.add("/login");
+        routeExceptions.add("/register");
+        routeExceptions.add("/css/**");
+        routeExceptions.add("/js/**");
+        routeExceptions.add("/favicon.ico");
+        protectedRoutes.add("/**");
         registry.addInterceptor(jwtInterceptor)
-            .addPathPatterns("/**")
-            .excludePathPatterns("/login");
+            .addPathPatterns(protectedRoutes)
+            .excludePathPatterns(routeExceptions);
     }
     
 }
