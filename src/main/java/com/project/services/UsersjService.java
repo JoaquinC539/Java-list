@@ -25,6 +25,7 @@ public class UsersjService {
         try {
            
             LinkedHashMap<String,Object> body=RequestParser.parseBody(request);
+            System.out.println(body);
             String username=TypeConverter.convertToString(body.get("username"));
             if(PasswordValidator.isValidPassword(username)){
                 return null;
@@ -33,8 +34,12 @@ public class UsersjService {
             if(PasswordValidator.isValidPassword(password)){
                 return null;
             }
-            Usersj user=new Usersj();
+            String name=TypeConverter.convertToString(body.get("name"));
+            String role=TypeConverter.convertToString(body.get("role"));            
+            Usersj user=new Usersj();            
             user.setUsername(username);
+            user.setName(name);
+            user.setRole(role);
             String hashedPassword=BCrypt.hashpw(password, BCrypt.gensalt(10));
             user.setPassword(hashedPassword);
             user.setCreated_at(new Date());

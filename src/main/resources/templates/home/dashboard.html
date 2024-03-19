@@ -4,7 +4,8 @@
     <!-------------CONTENT  ------>
     <div class="card w-100">
       <div class="card-title text-center mb-2">        
-        <b class="sub-title">Dashboard</b>        
+        <b class="sub-title">Dashboard</b> 
+        <h1 th:text="'Bienvenido, '+${user.name}"></h1>       
       </div>
       <br>
       <br>
@@ -35,9 +36,7 @@
 
       <br />
       <div class="card-body">
-        <form th:action="@{/logout}" method="post">
-          <input type="submit" value="Sign Out"/>
-      </form>
+        
       </div>
     </div>
     <!----------- END CONTENT------------ -->

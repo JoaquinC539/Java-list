@@ -29,6 +29,12 @@ public class Usersj {
     @Column(name = "_id")
     private Integer _id;
 
+    @Column(name="name")
+    private String name;
+
+    @Column(name="role")
+    private String role;
+
     @Column(name="password", nullable = false)
     private String password;
     

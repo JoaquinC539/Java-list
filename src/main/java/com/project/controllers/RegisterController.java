@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.project.models.Roles;
 import com.project.models.Usersj;
 import com.project.services.UsersjService;
 import com.project.utils.Session;
-
+import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -25,14 +28,16 @@ public class RegisterController {
 
     @GetMapping()
     public String register(Model model){
-
+        List<String> rolesList=Arrays.stream(Roles.values())
+            .map(Enum::name)
+            .collect(Collectors.toList());
+        model.addAttribute("roles", rolesList);
         model.addAttribute("sessions", session);
         return "register/register";
     }
 
     @PostMapping()
     public RedirectView save(HttpServletRequest request,Model model) throws Exception{
-        System.out.println(request);
         Usersj user=usersService.save(request);
         if(user==null){
             session.setError("Error creado a usuario nuevo");
