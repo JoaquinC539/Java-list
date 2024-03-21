@@ -1,0 +1,144 @@
+<html th:replace="~{fragments/layout::layout}">
+  <title th:fragment="title">Index</title>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">Proveedor</div>
+      <div class="card-subtitle mb-2 text-body-secondary text-center">
+        Index
+      </div>
+      <div class="card-subtitle">
+        <div class="d-flex justify-content-center">
+          <a href="/proveedor" class="btn btn-primary" type="button"
+            >Proveedores</a
+          >
+        </div>
+      </div>
+      <br />
+
+      <div th:if="${sessions?.success}" class="row message-container">
+        <div class="col-12 bg-success message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.successMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <div th:if="${sessions?.error}" class="row message-container">
+        <div class="col-12 bg-danger message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.errorMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="card-body">
+        <form
+          class="form"
+          id="editForm"
+        >
+          <div class="row">
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="ID"
+                name="_id"
+                aria-label="_id"
+                spellcheck="false"
+                th:value="${proveedor._id}"
+                disabled
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Nombre"
+                name="nombre"
+                aria-label="nombre"
+                spellcheck="false"
+                th:value="${proveedor.nombre}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Contacto"
+                name="contacto"
+                aria-label="contacto"
+                spellcheck="false"
+                th:value="${proveedor.contacto}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Dirección"
+                name="direccion"
+                aria-label="direccion"
+                spellcheck="false"
+                th:value="${proveedor.direccion}"
+                required
+              />
+            </div>
+            
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Email"
+                name="email"
+                aria-label="email"
+                spellcheck="false"
+                th:value="${proveedor.email}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <select name="activo" id="activo" required>
+                <option value="true" th:selected="${proveedor.activo}">
+                  Activo
+                </option>
+                <option value="false" th:selected="${!proveedor.activo}">
+                  Inactivo
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <br />
+          <input
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+            value="Actualizar"
+          />
+          <a class="btn btn-outline-danger my-2 my-sm-0" href="/proveedor"
+            >Cancelar</a
+          >
+        </form>
+      </div>
+    </div>
+    <!----------- END CONTENT------------ -->
+  </div>
+  <div th:fragment="viewscript">
+    <script src="/js/utils/utils.js"></script>
+    <script th:inline="javascript" type="module">
+        const id='[[${proveedor._id}]]'
+        const currUrl=window.location.href;
+        const parts=currUrl.split("/");
+        const url=parts[0]+"//"+parts[2]+"/proveedor/"+id;
+        
+        utils.updateModel(url);
+    </script>
+  </div>
+</html>

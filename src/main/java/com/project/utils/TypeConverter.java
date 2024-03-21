@@ -3,6 +3,7 @@ package com.project.utils;
 
 
 public class TypeConverter {
+    public TypeConverter(){}
     public static String convertToString(Object value) {
         if(value==null){
             return null;

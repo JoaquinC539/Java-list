@@ -1,0 +1,145 @@
+<html th:replace="~{fragments/layout::layout}">
+  <title th:fragment="title">Producto</title>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">producto</div>
+      <div class="card-subtitle mb-2 text-body-secondary text-center">
+        Index
+      </div>
+      <div class="card-subtitle">
+        <div class="d-flex justify-content-center">
+          <a href="/producto" class="btn btn-primary" type="button"
+            >Productos</a
+          >
+        </div>
+      </div>
+      <br />
+
+      <div th:if="${sessions?.success}" class="row message-container">
+        <div class="col-12 bg-success message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.successMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <div th:if="${sessions?.error}" class="row message-container">
+        <div class="col-12 bg-danger message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.errorMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="card-body">
+        <form class="form" id="editForm">
+          <div class="row">
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="ID"
+                name="_id"
+                aria-label="id"
+                spellcheck="false"
+                disabled
+                th:value="${producto._id?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Nombre"
+                name="nombre"
+                aria-label="nombre"
+                spellcheck="false"
+                th:value="${producto.nombre?:''}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Categoria"
+                name="category"
+                aria-label="category"
+                spellcheck="false"
+                th:value="${producto.category?:''}"
+                required
+              />
+            </div>
+
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="Precio"
+                name="precio"
+                aria-label="precio"
+                spellcheck="false"
+                th:value="${producto.precio?:''}"
+                required
+              />
+            </div>
+
+            <div class="col-12 col-md-4 form-box">
+              <select name="proveedor" id="proveedor" class="select2" required>
+                <option value="">Selecciona una proveedor</option>
+                <option
+                  th:each="proveedor : ${proveedores}"
+                  th:value="${proveedor._id}"
+                  th:text="${proveedor.nombre}"
+                  th:selected="${#strings.equals(proveedor._id,producto.proveedor._id)}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-md-4 form-box">
+                <textarea
+                  name="descripcion"
+                  id="descripcion"
+                  cols="40"
+                  rows="10"
+                  required
+                  placeholder="Descripción del producto aqui"
+                  th:text="${producto.descripcion}"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <input
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+            value="Actualizar"
+          />
+          <a class="btn btn-outline-danger my-2 my-sm-0" href="/producto"
+            >Cancelar</a
+          >
+        </form>
+      </div>
+    </div>
+    <!----------- END CONTENT------------ -->
+  </div>
+  <div th:fragment="viewscript">
+    <script src="/js/utils/utils.js"></script>
+    <script th:inline="javascript" type="module">
+      const id = "[[${producto._id}]]";
+      const currUrl = window.location.href;
+      const parts = currUrl.split("/");
+      const url = parts[0] + "//" + parts[2] + "/producto/" + id;
+
+      utils.updateModel(url);
+    </script>
+  </div>
+</html>

@@ -34,7 +34,7 @@ public class Proveedor {
     @Id
     @GeneratedValue
     @Column(name = "_id")
-    private Integer id;
+    private Integer _id;
 
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;

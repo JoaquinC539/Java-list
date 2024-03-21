@@ -1,0 +1,183 @@
+<html th:replace="~{fragments/layout::layout}">
+  <title th:fragment="title">Index</title>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">Proveedor</div>
+      <div class="card-subtitle mb-2 text-body-secondary text-center">
+        Index
+      </div>
+      <div class="card-subtitle">
+        <div class="d-flex justify-content-center">
+          <a href="/proveedor/create" class="btn btn-primary" type="button"
+            >Nuevo Proveedor</a
+          >
+        </div>
+      </div>
+      <br />
+      <div th:if="${sessions?.success}" class="row message-container">
+        <div class="col-12 bg-success message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.successMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <div th:if="${sessions?.error}" class="row message-container">
+        <div class="col-12 bg-danger message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.errorMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="card-body">
+        <form
+          class="form"
+          id="Proveedores_filter"
+          method="GET"
+          action="/proveedor"
+        >
+          <div class="row">
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="ID"
+                name="_id"
+                aria-label="id"
+                spellcheck="false"
+                th:value="${param._id?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Nombre"
+                name="nombre"
+                aria-label="nombre"
+                spellcheck="false"
+                th:value="${param.nombre?:''}"
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Contacto"
+                name="contacto"
+                aria-label="apelldo"
+                spellcheck="false"
+                th:value="${param.contacto?:''}"
+              />
+            </div>
+            
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Email"
+                name="email"
+                aria-label="email"
+                spellcheck="false"
+                th:value="${param.email?:''}"
+              />
+            </div>
+            
+            
+            <div class="col-12 col-md-4 form-box">
+              <select name="activo" id="activo">
+                <option value="">Todos</option>
+                <option
+                  value="true"
+                  th:selected="${#strings.equals('true', param.activo)}"
+                >
+                  Activo
+                </option>
+                <option
+                  value="false"
+                  th:selected="${#strings.equals('false', param.activo)}"
+                >
+                  Inactivo
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <br />
+          <input
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+            value="Filtrar"
+          />
+          <a class="btn btn-outline-danger my-2 my-sm-0" href="/proveedor"
+            >Remover filtros</a
+          >
+        </form>
+      </div>
+
+      <div class="card-body table-responsive">
+        <table class="table align-middle table-stripped" id="app-table">
+          <thead>
+            <th class="text-center">Acciones</th>
+            <th class="text-center">ID</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Contacto</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Dirección</th>
+            <th class="text-center">Activo</th>
+          </thead>
+          <tbody>
+            <tr th:each=" proveedor: ${proveedores.data}">
+              <td class="text-truncate text-center">
+                <a th:href="@{'/proveedor/edit/'+${proveedor._id}}"
+                  ><i class="fa fa-pencil"></i
+                ></a>
+              </td>
+              <td
+                class="text-truncate text-center"
+                th:text="${proveedor._id}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${proveedor.nombre}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${proveedor.contacto}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${proveedor.email}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${proveedor.direccion}"
+              ></td>
+              <td
+                class="text-truncate text-center"
+                th:text="${proveedor.activo ? 'Activo':'Inactivo'}"
+              ></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="paginator" id="paginator"></div>
+      </div>
+    </div>
+    <!----------- END CONTENT------------ -->
+  </div>
+  <div th:fragment="viewscript">
+    <script src="/js/utils/utils.js"></script>
+    <script th:inline="javascript" type="module">
+      utils.setPaginator("[[${proveedores.count}]]");
+
+      // index.myFunc(Proveedores)
+    </script>
+  </div>
+</html>

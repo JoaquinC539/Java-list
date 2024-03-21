@@ -1,0 +1,129 @@
+<html th:replace="~{fragments/layout::layout}">
+  <title th:fragment="title">Producto</title>
+  <div th:fragment="content">
+    <!-------------CONTENT  ------>
+    <div class="card w-100">
+      <div class="card-title text-center mb-2">Producto</div>
+      <div class="card-subtitle mb-2 text-body-secondary text-center">
+        Crear
+      </div>
+      <div class="card-subtitle">
+        <div class="d-flex justify-content-center">
+          <a href="/producto" class="btn btn-primary" type="button"
+            >Productos</a
+          >
+        </div>
+      </div>
+      <br />
+
+      <div th:if="${sessions?.success}" class="row message-container">
+        <div class="col-12 bg-success message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.successMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <div th:if="${sessions?.error}" class="row message-container">
+        <div class="col-12 bg-danger message">
+          <p
+            class="text-center alert-custom"
+            th:text="${sessions?.errorMessage}"
+          ></p>
+          <span th:text="${sessions?.hide()}" hidden></span>
+        </div>
+      </div>
+      <br />
+
+      <br />
+      <div class="card-body">
+        <form
+          class="form"
+          id="createForm"
+          method="POST"
+          th:action="@{/producto}"
+        >
+          <div class="row">
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Nombre"
+                name="nombre"
+                aria-label="nombre"
+                spellcheck="false"
+                th:value="${param.nombre?:''}"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Categoria"
+                name="category"
+                aria-label="category"
+                spellcheck="false"
+                th:value="${param.category?:''}"
+                required
+              />
+            </div>
+
+            <div class="col-12 col-md-4 form-box">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="Precio"
+                name="precio"
+                aria-label="precio"
+                spellcheck="false"
+                th:value="${param.precio?:''}"
+                required
+              />
+            </div>
+
+            <div class="col-12 col-md-4 form-box">
+              <select name="proveedor" id="proveedor" class="select2" required>
+                <option value="">Selecciona una proveedor</option>
+                <option
+                  th:each="proveedor : ${proveedores}"
+                  th:value="${proveedor._id}"
+                  th:text="${proveedor.nombre}"
+                  th:selected="${#strings.equals(proveedor._id,param.proveedor)}"
+                ></option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-md-4 form-box">
+                <textarea
+                  name="descripcion"
+                  id="descripcion"
+                  cols="40"
+                  rows="10"
+                  required
+                  placeholder="Descripción del producto aqui"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <input
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+            value="Crear"
+          />
+          <a class="btn btn-outline-danger my-2 my-sm-0" href="/producto"
+            >Cancelar</a
+          >
+        </form>
+      </div>
+    </div>
+    <!----------- END CONTENT------------ -->
+  </div>
+  <div th:fragment="viewscript">
+    <script th:inline="javascript" type="module"></script>
+  </div>
+</html>
