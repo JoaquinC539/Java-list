@@ -5,16 +5,13 @@ html{
     font-size: 1.0em;
     color-scheme: 'light dark';
 }
-html,
+
 body,.body{
     width: 100%;
     height: 100%;
     min-height: 100vh;
     font-family: 'Gill Sans', sans-serif;
-    padding: 1rem;
 }
-
-
 
 .dark{
     background: #000;
@@ -29,6 +26,11 @@ tr,td{
     margin:1rem 0 1rem 0;
     border-right:solid 1px black;
     border-left:solid 1px black
+}
+table .text-center{
+    max-width: 15em;
+    white-space: nowrap;
+    /* overflow-x: auto; */
 }
 .cell{
     text-align:center;
@@ -102,4 +104,20 @@ th.text-center{
   /* Styling for the scrollbar: */
   scrollbar-width: thin;
   scrollbar-color: #ccc #f0f0f0; /* Adjust as needed */
+}
+@media screen and  (max-width:400px) {
+
+    body{
+        padding: 0.3rem;
+    }
+}
+@media screen and (min-width:401px) and (max-width:1000px) {
+    body{
+        padding: 0.7rem;
+    }
+}
+@media screen and (min-width:1001px) {
+    body{
+        padding: 1rem;
+    }
 }
