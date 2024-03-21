@@ -10,6 +10,7 @@ import com.project.models.Usersj;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -81,7 +82,7 @@ public class JwtUtil {
             builder.claims(claim);           
             builder.signWith(SignatureAlgorithm.HS256, jwtKey);
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.HOUR_OF_DAY, 1);
+            calendar.add(Calendar.MONTH, 1);
             builder.setExpiration(calendar.getTime());
             return builder.compact();
         } catch (Exception e) {
@@ -117,7 +118,9 @@ public class JwtUtil {
                     .parseClaimsJws(rawJwtToken);
 
             return claimsJws;
-        } catch (Exception e) {
+        }catch(ExpiredJwtException e){
+            return null;
+        }catch (Exception e) {
             System.err.println("Error at decoding auth token: " + e);
             return null;
         }
@@ -148,7 +151,9 @@ public class JwtUtil {
                     .parseClaimsJws(rawJwtToken);
 
             return claimsJws;
-        } catch (Exception e) {
+        }catch(ExpiredJwtException e){
+            return null;
+        }catch (Exception e) {
             System.err.println("Error at decoding auth token: " + e);
             return null;
         }

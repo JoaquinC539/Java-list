@@ -37,7 +37,6 @@ public class LogoutController {
         response.addCookie(refreshCookie);
         request.setAttribute("user", null);
         HttpHeaders headers = new HttpHeaders();
-
         if (contentType != null && contentType.contains("application/json")) {
             LinkedHashMap<String, Object> res = new LinkedHashMap<>();
             res.put("Auth", "Removed_Auth");

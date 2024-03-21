@@ -83,6 +83,7 @@ public class LoginController {
             HttpHeaders headers=new HttpHeaders();
             Integer refreshDuration=10*7*24*60*60;
             Integer authDuration=1*60*60;
+            
             Cookie refreshCookie=new Cookie("refreshAuth", refreshToken);
             refreshCookie.setHttpOnly(true);
             refreshCookie.setMaxAge(refreshDuration);
