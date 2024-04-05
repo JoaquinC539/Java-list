@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  java-app:
+    image: java-app
+    container_name: java-app
+    ports:
+      - "4700:4700"
+    networks:
+      - my-network
+    
+    env_file:
+      - ./.env.prod
+
+networks:
+  my-network:
+    external: true

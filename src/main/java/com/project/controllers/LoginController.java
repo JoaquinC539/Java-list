@@ -4,6 +4,7 @@ package com.project.controllers;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +34,38 @@ public class LoginController {
     private Session session=new Session();
     @Autowired
     AuthService authService;
-    
-   
 
     @GetMapping()
     public Object login(HttpServletRequest request,Model model){
         Jws<Claims> clJws=JwtUtil.descipherAuthToken(request);
-        if(clJws==null){
+        String contentHeader = request.getHeader("content-type");
+        
+        if(clJws==null){               
+                if( contentHeader!=null){
+                    HttpHeaders headers=new HttpHeaders();
+                    headers.add("Content-Type", contentHeader);
+                    HashMap<String,String> body=new HashMap<>();
+                    body.put("message", "Login required");
+                    ResponseEntity<HashMap<String,String>> resp=new ResponseEntity<>(body, headers, 301);
+                    return resp;                
+                } 
+                    
             model.addAttribute("sessions", session);
             return "login/login";
         }else if(clJws.getPayload().containsKey("id")){
             return new RedirectView("/dashboard");
         }
-        else{
+        else{            
+                if( contentHeader!=null){
+                    System.out.println("application clws null");
+                    HttpHeaders headers=new HttpHeaders();
+                    headers.add("Content-Type", contentHeader);
+                    HashMap<String,String> body=new HashMap<>();
+                    body.put("message", "Login required");
+                    ResponseEntity<HashMap<String,String>> resp=new ResponseEntity<>(body, headers, 301);
+                    return resp;
+                
+                }
             model.addAttribute("sessions", session);
             return "login/login"; 
         }
@@ -95,7 +115,7 @@ public class LoginController {
             response.addCookie(authCookie);
             response.addCookie(refreshCookie);
             String contentType = request.getContentType();
-            if(contentType != null && contentType.contains("application/json")) {
+            if(contentType.equals("application/json")) {
                 LinkedHashMap<String,Object> res=new LinkedHashMap<>();                
                 res.put("Auth", token);
                 res.put("refreshAuth", refreshToken);

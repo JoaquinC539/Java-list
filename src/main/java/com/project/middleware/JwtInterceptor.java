@@ -18,11 +18,27 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull Object handler) throws Exception{
         Boolean authSetter=authService.checkTokens(request, response);
+        String contentType = request.getContentType();
         if(authSetter==null){
             return false;
         }
+        if(contentType!=null && contentType.equals("application/json")){
+            if(!authSetter && !request.getRequestURI().equals("/login")){
+                
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); 
+                response.getWriter().write("Unauthorized - Authentication required"); 
+                response.getWriter().flush(); 
+                return false;
+            }else{
+                return false;
+            }
+        }
+       
+        
+        
+        
         if(!authSetter && !request.getRequestURI().equals("/login")){
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);           
             response.sendRedirect("/login");
             return false;
         }
