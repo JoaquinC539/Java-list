@@ -18,7 +18,6 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull Object handler) throws Exception{
         Boolean authSetter=authService.checkTokens(request, response);
-        System.out.println(authSetter);
         String contentType = request.getContentType();
         if(authSetter==null){
             return false;
