@@ -27,13 +27,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/vendedor")
-
 public class VendedorController {
     private Session session = new Session();
     @Autowired
     private VendedorService vendedorService;
 
-    @GetMapping(value = "")
+    @GetMapping()
     public Object index(HttpServletRequest request) {
         PaginatedData<Vendedor> vendedores = vendedorService.index(request);
         String contentHeader = request.getHeader("content-type");
