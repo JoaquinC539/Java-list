@@ -75,15 +75,34 @@ public class LoginController {
     @PostMapping()
     public Object log(HttpServletRequest request,HttpServletResponse response) throws Exception{
         LinkedHashMap<String,Object> body=RequestParser.parseBody(request);
+        String contentType = request.getContentType();
         
         AuthPayload auth=authService.auth(body);
+        HttpHeaders headers=new HttpHeaders();
         if(auth==null){
+            if(contentType.equals("application/json")) {
+                LinkedHashMap<String,Object> res=new LinkedHashMap<>();
+                res.put("error", "Missing auth error");
+                headers.add("Content-Type", "application/json");
+                ResponseEntity<LinkedHashMap<String,Object>> resp=new ResponseEntity<>(res, headers, 403);            
+                return resp;
+            }
+
             session.setError("Authorization couldn't not be fulfilled try again");
             return new RedirectView("login");
+            
         }
         if(!auth.getAuth()){
+            if(contentType.equals("application/json")) {
+                LinkedHashMap<String,Object> res=new LinkedHashMap<>();
+                res.put("error", "Incorrect password");
+                headers.add("Content-Type", "application/json");
+                ResponseEntity<LinkedHashMap<String,Object>> resp=new ResponseEntity<>(res, headers, 401);            
+                return resp;
+            }
             session.setError("Contraseña incorrecta");
             return new RedirectView("login");
+                
         }else{            
             String token=JwtUtil.generateAuthToken(auth.getUser());
             if(token==null){
@@ -100,7 +119,7 @@ public class LoginController {
                 session.setError("Error at generatin auth token");
                 return new RedirectView("login");
             }
-            HttpHeaders headers=new HttpHeaders();
+            
             Integer refreshDuration=10*7*24*60*60;
             Integer authDuration=1*60*60;
             
@@ -114,7 +133,7 @@ public class LoginController {
             authCookie.setAttribute("SameSite", "Strict");
             response.addCookie(authCookie);
             response.addCookie(refreshCookie);
-            String contentType = request.getContentType();
+            
             if(contentType.equals("application/json")) {
                 LinkedHashMap<String,Object> res=new LinkedHashMap<>();                
                 res.put("Auth", token);

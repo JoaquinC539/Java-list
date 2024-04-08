@@ -73,7 +73,7 @@ public class ProductoService {
             producto.setNombre(TypeConverter.convertToString(body.get("nombre")));
             producto.setPrecio(TypeConverter.convertToFloat(body.get("precio")));
             
-            @SuppressWarnings("null")
+            
             Optional<Proveedor> proveedor = proveedorRepository.findById(TypeConverter.convertToInteger(body.get("proveedor")));
             producto.setProveedor(proveedor.get());
             
@@ -103,7 +103,7 @@ public class ProductoService {
             producto.setNombre(TypeConverter.convertToString(body.get("nombre")));
             producto.setPrecio(TypeConverter.convertToFloat(body.get("precio")));
             
-            @SuppressWarnings("null")
+            
             Optional<Proveedor> proveedor = proveedorRepository.findById(TypeConverter.convertToInteger(body.get("proveedor")));
             producto.setProveedor(proveedor.get());
             

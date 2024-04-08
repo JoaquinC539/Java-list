@@ -48,7 +48,6 @@ public class AuthService {
          }
          if(authClaim==null && refreshClaim!=null && refreshClaim.getPayload().containsKey("id")  ){
             Integer id=TypeConverter.convertToInteger(refreshClaim.getPayload().get("id"));
-            @SuppressWarnings("null")
             Optional<Usersj> user=usersjRepository.findById(id);
             if(user.isPresent()){
                 String refreshToken=JwtUtil.generateRefreshToken(user.get());
@@ -79,14 +78,14 @@ public class AuthService {
             }
          }else if(refreshClaim==null && authClaim!=null && authClaim.getPayload().containsKey("id")){
             Integer id=TypeConverter.convertToInteger(authClaim.getPayload().get("id"));
-            @SuppressWarnings("null")
+           
             Optional<Usersj> user=usersjRepository.findById(id);
             request.setAttribute("user", user.get());
             
             return true;
          }else if(authClaim!=null && refreshClaim!=null && authClaim.getPayload().containsKey("id") && refreshClaim.getPayload().containsKey("id")){
             Integer id=TypeConverter.convertToInteger(refreshClaim.getPayload().get("id"));
-            @SuppressWarnings("null")
+            
             Optional<Usersj> user=usersjRepository.findById(id);
             request.setAttribute("user", user.get());
             return true;
