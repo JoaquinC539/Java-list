@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -92,6 +93,18 @@ public class VendedorController {
             session.setError("Vendedor no encontrado");
             return new RedirectView("/vendedor", true);
         }
+    }
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public ResponseEntity<Vendedor> get(@PathVariable("id") Integer id) {
+        Optional<Vendedor> vendedorOptional = vendedorService.get(id);
+        if(!vendedorOptional.isPresent()){
+            return ResponseEntity.notFound().build();
+
+        }else{
+            return ResponseEntity.ok(vendedorOptional.get());
+        }
+        
     }
 
     @PutMapping(value = "/{id}")

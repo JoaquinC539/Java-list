@@ -1,6 +1,9 @@
 package com.project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,9 @@ import com.project.models.Usersj;
 import com.project.services.UsersjService;
 import com.project.utils.Session;
 import java.util.List;
+import java.util.Map;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,8 +42,24 @@ public class RegisterController {
     }
 
     @PostMapping()
-    public RedirectView save(HttpServletRequest request,Model model) throws Exception{
+    public Object save(HttpServletRequest request,Model model) throws Exception{
         Usersj user=usersService.save(request);
+        String contentHeader=request.getHeader("content-type");
+        if(contentHeader.equals("application/json")){
+            if(user==null){
+                Map<String,String> body=new HashMap<String,String>();
+                body.put("error", "user could not be saved");
+                HttpHeaders headers=new HttpHeaders();
+                headers.add("Content-Type", "application/json");
+                ResponseEntity<Map<String,String>> resp=new ResponseEntity<Map<String,String>>(body,headers, HttpStatusCode.valueOf(500));
+                return resp;
+            }else{                
+                HttpHeaders headers=new HttpHeaders();
+                headers.add("Content-Type", "application/json");
+                ResponseEntity<Usersj> resp=new ResponseEntity<Usersj>(user,headers, HttpStatusCode.valueOf(200));
+                return resp;
+            }
+        }
         if(user==null){
             session.setError("Error creado a usuario nuevo");
         }else{

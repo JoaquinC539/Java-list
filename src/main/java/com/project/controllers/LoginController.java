@@ -57,7 +57,6 @@ public class LoginController {
         }
         else{            
                 if( contentHeader!=null){
-                    System.out.println("application clws null");
                     HttpHeaders headers=new HttpHeaders();
                     headers.add("Content-Type", contentHeader);
                     HashMap<String,String> body=new HashMap<>();

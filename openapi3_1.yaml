@@ -1,0 +1,166 @@
+openapi: '3.1.0'
+info: 
+  title: Java General API
+  description: Listing and filter forms with login
+  contact: 
+    name: JC
+    url: https://github.com/JoaquinC539/Java-list
+  version: 1.0.0
+servers: 
+  - url: http://devapi.com
+  - url: http://prodapi.com
+paths:
+  /vendedor:
+    description: Vendedor resource for CRUD methods
+    get: 
+      description: Operation to fetch paginated vendedores
+      parameters: 
+        - in: query
+          name: _id
+          description: id of vendedor
+          required: false
+          schema: 
+            type: number
+            examples: 
+              - 4
+        - in: query
+          name: nombre
+          description: nombre of vendedor
+          required: false
+          schema: 
+            type: string
+            examples: 
+              - John
+        - in: query
+          name: apellido
+          description: apellido of vendedor
+          required: false
+          schema: 
+            type: string
+            examples: 
+              - Doe
+        - in: query
+          name: correo_electronico
+          description: email of vendedor
+          required: false
+          schema: 
+            type: string
+            examples: 
+              - johndoe@email.com
+
+        - in: query
+          name: edad
+          description: edad of vendedor
+          required: false
+          schema: 
+            type: number
+            examples: 
+              - 37
+              
+        - in: query
+          name: activo
+          description: active status of vendedor
+          required: false
+          schema: 
+            type: boolean
+            examples: 
+              - true
+              - false
+      responses: 
+        200:
+          description: Success response
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/vendedores'  
+    post:
+      description: Add a new vendedor
+      requestBody:
+        content: 
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/vendedor_post_put'
+      responses: 
+        201:
+          content: 
+            application/json: 
+          description: Vendedor added successfully    
+        200:
+          content: 
+            application/json: 
+          description: Vendedor added successfully 
+  /vendedor/{id}:    
+    description: Use vendedor based on path parameters
+    get:
+      description: Get vendedor based on path parameters      
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            $ref: '#/components/schemas/vendedor'
+    put:
+      description: Update vendedor based on path parameters
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            $ref: '#/components/schemas/vendedor_post_put'          
+
+components:
+  schemas: 
+    vendedor:
+      type: object
+      properties:
+          _id:
+            type: integer
+          nombre:
+            type: string
+          apellido:
+            type: string
+          edad:
+            type: number
+          correo_electronico:
+            type: string
+          activo:
+            type: boolean
+          created_at:
+            type: string
+          updated_at:
+            type: string 
+    vendedores:
+      type: array
+      items:
+        properties:
+          _id:
+            type: integer
+          nombre:
+            type: string
+          apellido:
+            type: string
+          edad:
+            type: number
+          correo_electronico:
+            type: string
+          activo:
+            type: boolean
+          created_at:
+            type: string
+          updated_at:
+            type: string
+    vendedor_post_put:
+      type: object
+      properties:
+        nombre:
+          type: string
+        apellido:
+          type: string
+        edad:
+          type: number
+        correo_electronico:
+          type: string
+        activo:
+          type: boolean 
+           
+         
